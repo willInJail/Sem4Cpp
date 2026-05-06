@@ -20,19 +20,19 @@ public:
 class GoodStudent : public Student {
 public:
     GoodStudent(std::string name_);
-    std::vector<double> solveEquation(QuadraticEquation& eq);
+    std::vector<double> solveEquation(QuadraticEquation& eq) override;
 };
 
 class AverageStudent : public Student {
 public:
     AverageStudent(std::string name_);
-    std::vector<double> solveEquation(QuadraticEquation& eq);
+    std::vector<double> solveEquation(QuadraticEquation& eq) override;
 };
 
 class BadStudent : public Student {
 public:
     BadStudent(std::string name_);
-    std::vector<double> solveEquation(QuadraticEquation& eq);
+    std::vector<double> solveEquation(QuadraticEquation& eq) override;
 };
 
 #endif
