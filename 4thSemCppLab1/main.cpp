@@ -8,14 +8,12 @@
 #include "Student.h"
 #include "Teacher.h"
 
-using namespace std;
-
-vector<QuadraticEquation> readEquationsFromFile(string filename) {
-    vector<QuadraticEquation> equations;
-    ifstream file(filename.c_str());
+std::vector<QuadraticEquation> readEquationsFromFile(std::string filename) {
+    std::vector<QuadraticEquation> equations;
+    std::ifstream file(filename.c_str());
 
     if (!file.is_open()) {
-        cout << "OpenFileError: " << filename << endl;
+        std::cout << "OpenFileError: " << filename << std::endl;
         return equations;
     }
 
@@ -31,14 +29,14 @@ vector<QuadraticEquation> readEquationsFromFile(string filename) {
 int main() {
     srand((unsigned int)time(0));
 
-    vector<QuadraticEquation> equations = readEquationsFromFile("equations.txt");
+    std::vector<QuadraticEquation> equations = readEquationsFromFile("equations.txt");
 
     if (equations.empty()) {
-        cout << "File equations.txt is empty" << endl;
-        cout << "Create a file with equations in the format: a b c" << endl;
+        std::cout << "File equations.txt is empty" << std::endl;
+        std::cout << "Create a file with equations in the format: a b c" << std::endl;
     }
 
-    vector<Student*> students;
+    std::vector<Student*> students;
     students.push_back(new GoodStudent("Fedor1"));
     students.push_back(new AverageStudent("Fedor2"));
     students.push_back(new BadStudent("Genadiy"));
@@ -49,7 +47,7 @@ int main() {
 
     for (size_t i = 0; i < equations.size(); i++) {
         for (size_t j = 0; j < students.size(); j++) {
-            vector<double> solution = students[j]->solveEquation(equations[i]);
+            std::vector<double> solution = students[j]->solveEquation(equations[i]);
             teacher.addLetter(equations[i], solution, students[j]);
         }
     }
