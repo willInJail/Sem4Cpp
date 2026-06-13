@@ -1,11 +1,15 @@
 #include <SFML/Graphics.hpp>
 
 #include "Game.h"
+#include "Constants.h"
 
 int main()
 {
     sf::RenderWindow window(
-        sf::VideoMode(800, 600),
+        sf::VideoMode(
+            WINDOW_WIDTH,
+            WINDOW_HEIGHT
+        ),
         "Arkanoid"
     );
 

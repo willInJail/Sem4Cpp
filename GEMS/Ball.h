@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Constants.h"
+
 class Ball
 {
 public:
@@ -16,11 +18,12 @@ public:
 
     Ball()
     {
-        x = 400;
-        y = 300;
+        x = START_BALL_X;
+        y = START_BALL_Y;
 
-        dx = 4;
-        dy = -4;
+        dx = START_BALL_SPEED_X;
+
+        dy = START_BALL_SPEED_Y;
 
         radius = 10;
 

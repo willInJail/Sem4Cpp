@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Constants.h"
 
 #include <ctime>
 #include <cstdlib>
@@ -17,11 +18,11 @@ Game::Game()
 
 void Game::CreateBlocks()
 {
-    const int rows = 5;
-    const int cols = 10;
+    const int rows = ROWS;
+    const int cols = COLS;
 
-    const int width = 70;
-    const int height = 25;
+    const int width = WIDTH_1;
+    const int height = HEIGHT_1;
 
     for (int y = 0; y < rows; y++)
     {
@@ -97,8 +98,8 @@ void Game::MoveRight()
 {
     paddle.x += paddle.speed;
 
-    if (paddle.x + paddle.width > 800)
-        paddle.x = 800 - paddle.width;
+    if (paddle.x + paddle.width > WINDOW_WIDTH)
+        paddle.x = WINDOW_WIDTH - paddle.width;
 }
 
 void Game::Update()
@@ -146,7 +147,7 @@ void Game::CheckWallCollision()
         ball.dx = -ball.dx;
     }
 
-    if (ball.x + ball.radius > 800)
+    if (ball.x + ball.radius > WINDOW_WIDTH)
     {
         ball.dx = -ball.dx;
     }
@@ -156,7 +157,7 @@ void Game::CheckWallCollision()
         ball.dy = -ball.dy;
     }
 
-    if (ball.y > 600)
+    if (ball.y > WINDOW_HEIGHT)
     {
         if (bottomShield)
         {
@@ -170,11 +171,12 @@ void Game::CheckWallCollision()
 
             score -= 5;
 
-            ball.x = 400;
-            ball.y = 300;
+            ball.x = START_BALL_X;
+            ball.y = START_BALL_Y;
 
-            ball.dx = 4;
-            ball.dy = -4;
+            ball.dx = START_BALL_SPEED_X;
+
+            ball.dy = START_BALL_SPEED_Y;
         }
     }
 }
@@ -220,8 +222,8 @@ void Game::CheckBlockCollision()
 
             if (blocks[i].type == SPEED_BLOCK)
             {
-                ball.dx *= 1.2f;
-                ball.dy *= 1.2f;
+                ball.dx *= SPEED_BLOCK_VELOCITY;
+                ball.dy *= SPEED_BLOCK_VELOCITY;
             }
 
             if (blocks[i].health <= 0)
@@ -300,8 +302,8 @@ void Game::CheckBonusCollision()
         sf::FloatRect bonusRect(
             bonuses[i].x,
             bonuses[i].y,
-            20,
-            20
+            BONUS_SIZE,
+            BONUS_SIZE
         );
 
         if (bonusRect.intersects(paddleRect))
@@ -313,7 +315,7 @@ void Game::CheckBonusCollision()
             bonuses[i].active = false;
         }
 
-        if (bonuses[i].y > 600)
+        if (bonuses[i].y > WINDOW_HEIGHT)
         {
             bonuses[i].active = false;
         }
@@ -325,19 +327,19 @@ void Game::ApplyBonus(BonusType type)
     switch (type)
     {
     case BIG_PADDLE:
-        paddle.width += 40;
+        paddle.width += BIG_PADDLE_BONUS;
         break;
 
     case SMALL_PADDLE:
-        paddle.width -= 20;
+        paddle.width -= BIG_PADDLE_BONUS;
 
-        if (paddle.width < 40)
-            paddle.width = 40;
+        if (paddle.width < MIN_PADDLE_WIDTH)
+            paddle.width = MIN_PADDLE_WIDTH;
         break;
 
     case FAST_BALL:
-        ball.dx *= 1.3f;
-        ball.dy *= 1.3f;
+        ball.dx *= SPEED_BLOCK_VELOCITY;
+        ball.dy *= SPEED_BLOCK_VELOCITY;
         break;
 
     case STICKY_BALL:
@@ -414,7 +416,10 @@ void Game::Draw(sf::RenderWindow& window)
         sf::RectangleShape bonusShape;
 
         bonusShape.setSize(
-            sf::Vector2f(20, 20)
+            sf::Vector2f(
+                BONUS_SIZE,
+                BONUS_SIZE
+            )
         );
 
         bonusShape.setPosition(
@@ -434,12 +439,12 @@ void Game::Draw(sf::RenderWindow& window)
         sf::RectangleShape shield;
 
         shield.setSize(
-            sf::Vector2f(800, 5)
+            sf::Vector2f(WINDOW_WIDTH, 5)
         );
 
         shield.setPosition(
             0,
-            595
+            WINDOW_HEIGHT - 5
         );
 
         shield.setFillColor(

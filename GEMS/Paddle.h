@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Constants.h"
+
 class Paddle
 {
 public:
